@@ -2,6 +2,7 @@ package com.ego.dubbo.service;
 
 import com.ego.commons.execption.DaoExecption;
 import com.ego.pojo.TbItem;
+import com.ego.pojo.TbItemDesc;
 
 import java.util.List;
 
@@ -32,5 +33,16 @@ public interface TbItemDubboService {
      * @throws DaoExecption
      */
     int updataStatusByIds(long[] ids,int status)throws DaoExecption;
+
+    /**
+     * 新增
+     * @param tbItem
+     * @param tbItemDesc
+     * @return
+     * @throws DaoExecption
+     */
+    int insert(TbItem tbItem, TbItemDesc tbItemDesc) throws DaoExecption;
+
+    int update(TbItem item, TbItemDesc tbItemDesc)throws DaoExecption;
 
 }

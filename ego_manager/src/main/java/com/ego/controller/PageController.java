@@ -49,4 +49,8 @@ public class PageController {
         return page;
     }
 
+    @RequestMapping("/rest/page/item-edit")
+    public String showEdit(){
+        return "item-edit";
+    }
 }

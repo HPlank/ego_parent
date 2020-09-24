@@ -1,7 +1,9 @@
 package com.ego.service;
 
+import com.ego.commons.execption.DaoExecption;
 import com.ego.commons.pojo.EasyUIDatagrid;
 import com.ego.commons.pojo.EgoResult;
+import com.ego.pojo.TbItem;
 
 /**
  * 完成视图逻辑
@@ -29,4 +31,14 @@ public interface TbItemService {
      */
     EgoResult updataStatus(long[] ids,int status);
 
+    /**
+     * 新增
+     * @param item
+     * @param desc
+     * @return
+     */
+    EgoResult insert(TbItem item,String desc);
+
+
+    EgoResult update(TbItem item, String desc) throws DaoExecption;
 }

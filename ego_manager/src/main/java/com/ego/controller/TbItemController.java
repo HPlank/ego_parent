@@ -1,8 +1,10 @@
 package com.ego.controller;
 
+import com.ego.commons.execption.DaoExecption;
 import com.ego.commons.pojo.EasyUIDatagrid;
 import com.ego.commons.pojo.EgoResult;
 import com.ego.dubbo.service.TbItemDubboService;
+import com.ego.pojo.TbItem;
 import com.ego.service.TbItemService;
 import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.C;
@@ -62,5 +64,30 @@ public class TbItemController {
     public EgoResult instock(long[] ids){
         return tbItemService.updataStatus(ids,2);
     }
+
+    /**
+     * 商品新增功能
+     * @param item
+     * @param desc
+     * @return
+     */
+    @RequestMapping("/item/save")
+    @ResponseBody
+    public EgoResult insert(TbItem item, String desc){
+        return tbItemService.insert(item,desc);
+    }
+
+    /**
+     * 修改
+     * @param item
+     * @param desc
+     * @return
+     */
+    @RequestMapping("/rest/item/update")
+    @ResponseBody
+    public EgoResult update(TbItem item,String desc) throws DaoExecption {
+        return tbItemService.update(item,desc);
+    }
+
 
 }

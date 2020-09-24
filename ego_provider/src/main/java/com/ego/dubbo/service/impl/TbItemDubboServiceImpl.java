@@ -2,8 +2,10 @@ package com.ego.dubbo.service.impl;
 
 import com.ego.commons.execption.DaoExecption;
 import com.ego.dubbo.service.TbItemDubboService;
+import com.ego.mapper.TbItemDescMapper;
 import com.ego.mapper.TbItemMapper;
 import com.ego.pojo.TbItem;
+import com.ego.pojo.TbItemDesc;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.dubbo.config.annotation.Service;
@@ -18,6 +20,8 @@ public class TbItemDubboServiceImpl implements TbItemDubboService {
 
     @Autowired
     private TbItemMapper tbItemMapper;
+    @Autowired
+    private TbItemDescMapper tbItemDescMapper;
 
     @Override
     public List<TbItem> selectByPage(int pageSize, int pageNumber) {
@@ -63,5 +67,33 @@ public class TbItemDubboServiceImpl implements TbItemDubboService {
         }
         //事務回滾
         throw new DaoExecption("批量修改失败");
+    }
+
+    @Override
+    @Transactional
+    public int insert(TbItem tbItem, TbItemDesc tbItemDesc) throws DaoExecption {
+        int index = tbItemMapper.insert(tbItem);
+        if(index==1){
+            int index2 = tbItemDescMapper.insert(tbItemDesc);
+            if(index2 == 1){
+                return 1;
+            }
+        }
+        throw new DaoExecption("新增失败！");
+    }
+
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(TbItem tbItem, TbItemDesc tbItemDesc) throws DaoExecption {
+        // 一定要调用selective，动态sql
+        int index = tbItemMapper.updateByPrimaryKeySelective(tbItem);
+        if(index==1){
+            int index2 = tbItemDescMapper.updateByPrimaryKeySelective(tbItemDesc);
+            if(index2==1){
+                return 1;
+            }
+        }
+        throw  new DaoExecption("修改失败");
     }
 }
