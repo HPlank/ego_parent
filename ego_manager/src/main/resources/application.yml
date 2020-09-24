@@ -1,0 +1,18 @@
+dubbo:
+  application:
+    name: ego-manager
+  registry:
+    address: zookeeper://192.168.8.128:2181
+
+server:
+  port: 80
+
+ # springmv视图解析器
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+  profiles:
+    active: commons
